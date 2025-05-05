@@ -1,3 +1,5 @@
+import { Calendar } from "../components/calendar";
+
 import { useAuthUser } from "@/hooks/useAuthUser";
 import { title } from "@/components/primitives";
 import DefaultLayout from "@/layouts/default";
@@ -36,6 +38,7 @@ export default function DashboardPage() {
         <div className="inline-block max-w-lg text-center justify-center">
           <h1 className={title()}>Dashboard</h1>
         </div>
+        <Calendar />
       </section>
     </DefaultLayout>
   );
