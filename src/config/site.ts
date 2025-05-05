@@ -1,21 +1,27 @@
+import { paths } from "./paths";
+
 export type SiteConfig = typeof siteConfig;
 
 export const siteConfig = {
-  name: "Vite + HeroUI",
-  description: "Make beautiful websites regardless of your design experience.",
+  name: "BookedIn",
+  description: "Manage your bookings with ease",
   navItems: [
     {
       label: "Home",
-      href: "/",
+      href: paths.home,
     },
     {
       label: "Dashboard",
-      href: "/dashboard",
+      href: paths.dashboard,
+    },
+    {
+      label: "Calendar",
+      href: paths.calendar,
     },
   ],
   links: {
-    home: "/",
-    login: "/login",
-    logout: "/logout",
+    home: paths.home,
+    login: paths.login,
+    logout: paths.logout,
   },
 };

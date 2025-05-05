@@ -16,11 +16,7 @@ export default function LoginPage() {
 
   useEffect(() => {
     if (user && !isLoadingUser) {
-      console.log("User is logged in:", user);
       navigate(siteConfig.links.home);
-      // Redirect to dashboard or perform other actions
-    } else {
-      console.log("No user is logged in");
     }
   }, [user]);
 
