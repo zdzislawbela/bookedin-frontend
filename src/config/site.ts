@@ -14,6 +14,8 @@ export const siteConfig = {
     },
   ],
   links: {
+    home: "/",
     login: "/login",
+    logout: "/logout",
   },
 };

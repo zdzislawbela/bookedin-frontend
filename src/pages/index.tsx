@@ -1,7 +1,13 @@
+import { getAnalytics } from "firebase/analytics";
+
+import { firebaseApp } from "../firebase";
+
 import { title, subtitle } from "@/components/primitives";
 import DefaultLayout from "@/layouts/default";
 
 export default function IndexPage() {
+  getAnalytics(firebaseApp);
+
   return (
     <DefaultLayout>
       <section className="flex flex-col items-center justify-center gap-6 py-10 md:py-16">

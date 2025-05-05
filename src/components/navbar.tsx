@@ -12,15 +12,18 @@ import {
 import { link as linkStyles } from "@heroui/theme";
 import clsx from "clsx";
 import { useLocation } from "react-router-dom";
+import { Image } from "@heroui/image";
+
+import { useAuthUser } from "../hooks/useAuthUser";
 
 import { title } from "./primitives";
 
 import { siteConfig } from "@/config/site";
 import { ThemeSwitch } from "@/components/theme-switch";
-import { HeartFilledIcon } from "@/components/icons";
 
 export const Navbar = () => {
   const pathname = useLocation().pathname;
+  const { user } = useAuthUser();
 
   return (
     <HeroUINavbar maxWidth="xl" position="sticky">
@@ -35,7 +38,7 @@ export const Navbar = () => {
             <span className={title({ color: "yellow" })}>In</span>
           </Link>
         </NavbarBrand>
-        <div className="hidden lg:flex gap-4 justify-start ml-2">
+        <div className="hidden sm:flex gap-4 justify-start ml-2">
           {siteConfig.navItems.map((item) => (
             <NavbarItem key={item.href}>
               <Link
@@ -57,25 +60,46 @@ export const Navbar = () => {
         className="hidden sm:flex basis-1/5 sm:basis-full"
         justify="end"
       >
-        <NavbarItem className="hidden sm:flex gap-2">
-          <ThemeSwitch />
+        <NavbarItem className="hidden sm:flex">
+          {user ? (
+            <div className="flex items-center gap-3 mr-4">
+              <span className="flex gap-1">
+                <span className="text-sm">{"Hello"}</span>
+                <span className="text-sm">{user.displayName}</span>
+              </span>
+              <Image
+                alt={user.displayName || "User"}
+                className="w-8 h-8 rounded-full"
+                src={user.photoURL || "/default-avatar.png"}
+              />
+              <Button
+                as={Link}
+                className="text-sm font-normal text-default-600 bg-default-100"
+                href={siteConfig.links.logout}
+                variant="flat"
+              >
+                Log out
+              </Button>
+            </div>
+          ) : (
+            <Button
+              as={Link}
+              className="text-sm font-normal text-default-600 bg-default-100"
+              href={siteConfig.links.login}
+              variant="flat"
+            >
+              Log in
+            </Button>
+          )}
         </NavbarItem>
-        <NavbarItem className="hidden md:flex">
-          <Button
-            as={Link}
-            className="text-sm font-normal text-default-600 bg-default-100"
-            href={siteConfig.links.login}
-            startContent={<HeartFilledIcon className="text-danger" />}
-            variant="flat"
-          >
-            Log in
-          </Button>
+        <NavbarItem className="hidden sm:flex">
+          <ThemeSwitch />
         </NavbarItem>
       </NavbarContent>
 
-      <NavbarContent className="sm:hidden basis-1 pl-4" justify="end">
-        <ThemeSwitch />
+      <NavbarContent className="sm:hidden basis-1 gap-4" justify="end">
         <NavbarMenuToggle />
+        <ThemeSwitch />
       </NavbarContent>
 
       <NavbarMenu>
@@ -95,6 +119,15 @@ export const Navbar = () => {
               </NavbarMenuItem>
             );
           })}
+          <NavbarMenuItem>
+            <Link
+              color={user ? "danger" : "foreground"}
+              href={user ? siteConfig.links.logout : siteConfig.links.login}
+              size="lg"
+            >
+              {user ? "Log out" : "Log in"}
+            </Link>
+          </NavbarMenuItem>
         </div>
       </NavbarMenu>
     </HeroUINavbar>
